@@ -1,7 +1,7 @@
 package com.example.expendedora.Entity;
 
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,9 +23,14 @@ public class Venta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "fecha", nullable = false, updatable = false, insertable = false, columnDefinition = "date DEFAULT CURRENT_DATE")
+	
+	@Column(name = "fecha", updatable = false, nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Calendar fecha;
+	private Date fecha = new Date();
+	
+	@Column(name = "hora", updatable = false, nullable = false)
+	@Temporal(TemporalType.TIME)
+	private Date hora = new Date();
 	
 	@ManyToOne
 	@JoinColumn(name = "maquina_expendedora_id")
@@ -43,11 +48,11 @@ public class Venta {
 		this.id = id;
 	}
 
-	public Calendar getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Calendar fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
@@ -66,6 +71,16 @@ public class Venta {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
+	}
+	
+	
 
 	
 	

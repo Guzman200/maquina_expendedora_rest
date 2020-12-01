@@ -1,5 +1,8 @@
 package com.example.expendedora.rest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +52,28 @@ public class VentaREST {
 		}
 		
 		return ResponseEntity.notFound().build();
+	}
+	
+	@GetMapping(value = "{maquina_id}/{fecha}")
+	public ResponseEntity<List<Venta>> getVentasByMaquinaByDia(
+			@PathVariable("maquina_id") int maquina_id, @PathVariable("fecha") String fecha) throws ParseException{
+		
+		Optional<MaquinaExpendedora> optional_maquina = maquinaDAO.findById(maquina_id);
+		
+		if(optional_maquina.isPresent()) {
+			MaquinaExpendedora maquina = optional_maquina.get();
+			
+			Date fecha_date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);			
+			
+			List<Venta> ventas = ventaDAO.findByfechaAndMaquinaExpendedora(fecha_date, maquina);
+			
+			return ResponseEntity.ok(ventas);
+			
+		}
+		
+		return ResponseEntity.notFound().build();
+		//return new Date();
+		
 	}
 
 	@PostMapping(value = "{producto_id}/{maquina_id}")
