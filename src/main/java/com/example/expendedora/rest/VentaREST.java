@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.expendedora.Entity.MaquinaExpendedora;
@@ -37,6 +35,20 @@ public class VentaREST {
 	public ResponseEntity<List<Venta>> getVentas(){
 		List<Venta> ventas = ventaDAO.findAll();
 		return ResponseEntity.ok(ventas);
+	}
+	
+	@GetMapping(value = "{maquina_id}")
+	public ResponseEntity<List<Venta>> getVentasByMaquina(@PathVariable("maquina_id") int maquina_id){
+		
+		Optional<MaquinaExpendedora> maquina = maquinaDAO.findById(maquina_id);
+		
+		if(maquina.isPresent()) {
+			MaquinaExpendedora maquina_ = maquina.get();
+			List<Venta> ventas = ventaDAO.findBymaquinaExpendedora(maquina_);
+			return ResponseEntity.ok(ventas);
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 
 	@PostMapping(value = "{producto_id}/{maquina_id}")
