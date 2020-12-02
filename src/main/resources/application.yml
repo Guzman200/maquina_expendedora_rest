@@ -1,19 +1,16 @@
-server:
-  port: 8080 
-
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres #vkzbpladccyrtq
     password: 12345678 #57ea03d3cb532a04d8573eb40577ccb9fa1e5722e33f3da75c547ed759915323
-    url: postgres://postgres:12345678@aws.c36o0wlfhsr4.us-east-1.rds.amazonaws.com:5432/aws
-    platform: postgres
-    initialization-mode: always
-    continue-on-error: true
+    url: jdbc:postgresql://aws.c36o0wlfhsr4.us-east-1.rds.amazonaws.com:5432/aws
+    #platform: postgres
+    #initialization-mode: always
+    #continue-on-error: true
   jpa:
-    show-sql: false
-    generate-ddl: true
+    #show-sql: false
+    #generate-ddl: true
     hibernate:
-      ddl-auto: update
-    database: postgresql
+      ddl-auto: create
+    #database: postgresql
         
